@@ -1,0 +1,39 @@
+<div>
+    <button mat-button (click)="filtrar(valor)">FILTRAR</button>
+  <mat-slider
+    style="margin: 15px"
+    class="example-margin"
+    [(ngModel)]="valor"
+    [disabled]="false"
+    [invert]="false"
+    [min]="precioMin"
+    [max]="3"
+    [step]="0.1"
+    [thumbLabel]="true"
+    [tickInterval]="1"
+    [vertical]="false"
+    aria-labelledby="example-name-label"
+  >
+  </mat-slider>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Carburante</mat-label>
+    <mat-select [(ngModel)]="carburanteSelected" name="Combustible">
+      <mat-option *ngFor="let item of carburantesList" value="{{ item }}">
+        {{ item }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div style="display: flex; flex-wrap: wrap; padding: 200px; margin: 50px;">
+    <mat-card class="example-card" *ngFor="let item of gasolFilteredList">
+      <mat-card-title>{{ item["Rótulo"] }}</mat-card-title>
+      <mat-card-subtitle>{{ item["Dirección"] }}</mat-card-subtitle>
+      <mat-card-content>
+        <p>Precio Gasoleo: {{ item["Precio Gasoleo A"] }}</p>
+        <p>Precio Gasolina: {{ item["Precio Gasolina 95 E5"] }}</p>
+        <p>Precio Hidrógeno: {{ item["Precio Hidrogeno"] }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

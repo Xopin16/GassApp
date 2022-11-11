@@ -1,5 +1,5 @@
 {
-  "name": "gas-app-v1",
+  "name": "gas-app-v2",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -26,8 +26,8 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^14.2.4",
-    "@angular/cli": "~14.2.4",
+    "@angular-devkit/build-angular": "^14.2.3",
+    "@angular/cli": "~14.2.3",
     "@angular/compiler-cli": "^14.2.0",
     "@types/jasmine": "~4.0.0",
     "jasmine-core": "~4.3.0",
