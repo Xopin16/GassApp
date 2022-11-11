@@ -16,6 +16,13 @@
   >
   </mat-slider>
 
+  <mat-form-field appearance="fill" style="margin: 5px;">
+    <mat-label>Provincia</mat-label>
+    <mat-select [(ngModel)]="provinciaSelected" multiple>
+      <mat-option *ngFor="let p of provinciasList" [value]="provinciaFilter">{{p.Provincia}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>Carburante</mat-label>
     <mat-select [(ngModel)]="carburanteSelected" name="Combustible">

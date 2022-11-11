@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 import { ListaEESSPrecio } from 'src/app/interfaces/carburante.interface';
+import { ProvinciaResponse } from 'src/app/interfaces/provincia.interface';
 import { CarburanteService } from 'src/app/services/carburante.service';
 
 @Component({
@@ -12,9 +13,12 @@ export class GasolListComponent implements OnInit {
 
   gasolList: ListaEESSPrecio[] = [];
   gasolFilteredList: ListaEESSPrecio[] = [];
+  provinciasList: ProvinciaResponse[] = [];
+  provinciaFilter: ProvinciaResponse[] = [];
   carburantesList = ['Gasoleo', 'Gasolina', 'Hidrogeno'];
   carburanteSelected = 'Gasoleo';
   precioMin = 1;
+  provinciaSelected: String[] = [];
   valor: number = 3;
   precioMax = 5;
 
@@ -25,6 +29,10 @@ export class GasolListComponent implements OnInit {
       this.gasolList = resp.ListaEESSPrecio;
       this.gasolFilteredList = resp.ListaEESSPrecio;
     });
+
+    this.carburanteService.getProvincias().subscribe((resp) =>{
+      this.provinciasList = resp;
+    })
   }
 
   filtrar(precio: number){
@@ -43,9 +51,14 @@ export class GasolListComponent implements OnInit {
     return pasaFiltro;
   }
   
-  changeSelected(event: MatSliderChange){
-    event.value
-  }
-
+  // filtroProv(p: ProvinciaResponse){ 
+  //   for (let p of this.gasolFilteredList) {
+  //     for (let c of this.provinciaFilter) {
+  //       if (p.IDProvincia == c.IDPovincia) {
+  //         this..push(p);
+  //       }
+  //     }
+  //   }
+  // }
 }
 
