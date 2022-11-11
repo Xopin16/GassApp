@@ -18,6 +18,12 @@ export class CarburanteService {
     );
   }
 
+  // getPrecios(): Observable<CarburanteResponse> {
+  //   return this.http.get<CarburanteResponse>(
+  //     `https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/PreciosEESSTerrestres`
+  //   );
+  // }
+
   getProvincias(): Observable<ProvinciaResponse[]> {
     return this.http.get<ProvinciaResponse[]>(
       `https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/Listados/Provincias/`
