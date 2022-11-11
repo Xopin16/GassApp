@@ -1,0 +1,11 @@
+.sec {
+  flex-wrap: wrap;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.example-card {
+  max-width: 400px;
+  margin: 10px;
+}

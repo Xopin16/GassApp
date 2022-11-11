@@ -1,8 +1,20 @@
-<ul *ngFor="let item of cityList">
+<!-- <ul *ngFor="let item of cityList">
     <li>{{item["Dirección"]}}</li>
-    <li>{{item["Municipio"]}}</li>
     <li>{{item["Rótulo"]}}</li>
     <li>Precio Gasoleo: {{item["Precio Gasoleo A"]}}</li>
     <li>Precio Gasolina: {{item["Precio Gasolina 95 E5"]}}</li>
     <li>Precio Hidrogeno: {{item["Precio Hidrogeno"]}}</li>
-</ul>
+</ul> -->
+<h1 style="text-align: center; margin-top: 10px;">LISTADO DE GASOLINERAS</h1>
+<div style="display: flex; flex-wrap: wrap; padding: 200px;">
+    <mat-card class="example-card" *ngFor="let item of cityList">
+        <mat-card-title>{{ item["Rótulo"] }}</mat-card-title>
+        <mat-card-subtitle>{{ item["Dirección"] }}</mat-card-subtitle>
+        <mat-card-content>
+          <p>Precio Gasoleo: {{ item["Precio Gasoleo A"] }}</p>
+          <p>Precio Gasolina: {{ item["Precio Gasolina 95 E5"] }}</p>
+          <p>Precio Hidrógeno: {{ item["Precio Hidrogeno"] }}</p>
+        </mat-card-content>
+      </mat-card>
+</div>
+
