@@ -32,8 +32,8 @@
     </mat-select>
   </mat-form-field>
 
-  <div style="display: flex; flex-wrap: wrap; padding: 200px; margin: 50px;">
-    <mat-card class="example-card" *ngFor="let item of gasolFilteredList">
+  <div style="display: flex; flex-wrap: wrap;">
+    <mat-card class="example-card" *ngFor="let item of gasolFilteredList" style="padding: 20px; margin: 10px;">
       <mat-card-title>{{ item["Rótulo"] }}</mat-card-title>
       <mat-card-subtitle>{{ item["Provincia"] }}</mat-card-subtitle>
       <mat-card-content>

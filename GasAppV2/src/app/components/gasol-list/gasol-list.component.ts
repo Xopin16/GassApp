@@ -18,7 +18,7 @@ export class GasolListComponent implements OnInit {
   carburantesList = ['Gasoleo', 'Gasolina', 'Hidrogeno'];
   carburanteSelected = 'Gasoleo';
   precioMin = 1;
-  provinciaSelected =  '';
+  provinciaSelected: String[] = [];
   valor: number = 3;
   precioMax = 5;
 
@@ -42,12 +42,11 @@ export class GasolListComponent implements OnInit {
   filtro(x: ListaEESSPrecio): boolean {
     let pasaFiltro = false;
     if(this.carburanteSelected == 'Gasoleo') {
-      pasaFiltro = +x['Precio Gasoleo A'].replace(",",".") < this.precioMax && x['IDProvincia'] == this.provinciaSelected ? true: false;
-
+      pasaFiltro = +x['Precio Gasoleo A'].replace(",",".") < this.precioMax &&  this.provinciaSelected.includes(x['IDProvincia'])? true: false;
     } else if(this.carburanteSelected == 'Gasolina') {
-      pasaFiltro = +x['Precio Gasolina 95 E5'].replace(",",".") < this.precioMax && x['IDProvincia'] == this.provinciaSelected ? true: false;
+      pasaFiltro = +x['Precio Gasolina 95 E5'].replace(",",".") < this.precioMax && this.provinciaSelected.includes(x['IDProvincia']) ? true: false;
     } else{
-      pasaFiltro = +x['Precio Hidrogeno'].replace(",",".") < this.precioMax && x['IDProvincia'] == this.provinciaSelected ? true: false;
+      pasaFiltro = +x['Precio Hidrogeno'].replace(",",".") < this.precioMax &&  this.provinciaSelected.includes(x['IDProvincia'])? true: false;
     }
     return pasaFiltro;
   }
