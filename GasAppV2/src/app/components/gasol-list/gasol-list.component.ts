@@ -54,18 +54,16 @@ export class GasolListComponent implements OnInit {
   }
 
   filtro(x: ListaEESSPrecio): boolean {
-    debugger;
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
-    debugger;
+    
     for (let it of this.gasolFilteredList) {
       if(!this.options.includes(it['Municipio'])){
         this.options.push(it['Municipio'])
       }
     }
-    debugger;
     let pasaFiltro = false;
     if(this.carburanteSelected == 'Gasoleo') {
       pasaFiltro = +x['Precio Gasoleo A'].replace(",",".") < this.precioMax &&  this.provinciaSelected.includes(x['IDProvincia']) ? true: false;

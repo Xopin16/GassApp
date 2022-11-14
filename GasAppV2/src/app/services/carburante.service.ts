@@ -6,23 +6,22 @@ import { MunicipioResponse } from '../interfaces/municipio.interface';
 import { ProvinciaResponse } from '../interfaces/provincia.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CarburanteService {
-
-  constructor(private http: HttpClient) { }
-
-  getPrecios(): Observable<CarburanteResponse> {
-    return this.http.get<CarburanteResponse>(
-      `https://raw.githubusercontent.com/Xopin16/GassV1/main/carburante.json`
-    );
-  }
+  constructor(private http: HttpClient) {}
 
   // getPrecios(): Observable<CarburanteResponse> {
   //   return this.http.get<CarburanteResponse>(
-  //     `https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/PreciosEESSTerrestres`
+  //     `https://raw.githubusercontent.com/Xopin16/GassV1/main/carburante.json`
   //   );
   // }
+
+  getPrecios(): Observable<CarburanteResponse> {
+    return this.http.get<CarburanteResponse>(
+      `https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/`
+    );
+  }
 
   getProvincias(): Observable<ProvinciaResponse[]> {
     return this.http.get<ProvinciaResponse[]>(
