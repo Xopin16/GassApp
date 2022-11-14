@@ -30,7 +30,7 @@ export class CarburanteService {
     );
   }
 
-  getMunicipios(id: string): Observable<MunicipioResponse[]> {
+  getMunicipios(id: String): Observable<MunicipioResponse[]> {
     return this.http.get<MunicipioResponse[]>(
       `https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/Listados/MunicipiosPorProvincia/${id}`
     );

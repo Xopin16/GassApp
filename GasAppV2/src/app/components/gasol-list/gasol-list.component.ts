@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { ListaEESSPrecio } from 'src/app/interfaces/carburante.interface';
+import { CarburanteResponse, ListaEESSPrecio } from 'src/app/interfaces/carburante.interface';
 import { MunicipioResponse } from 'src/app/interfaces/municipio.interface';
 import { ProvinciaResponse } from 'src/app/interfaces/provincia.interface';
 import { CarburanteService } from 'src/app/services/carburante.service';
@@ -14,6 +15,7 @@ import { CarburanteService } from 'src/app/services/carburante.service';
 export class GasolListComponent implements OnInit {
 
   myControl = new FormControl('');
+  filteredOptions?: Observable<MunicipioResponse[]>;
   gasolList: ListaEESSPrecio[] = [];
   gasolFilteredList: ListaEESSPrecio[] = [];
   provinciasList: ProvinciaResponse[] = [];
@@ -24,6 +26,7 @@ export class GasolListComponent implements OnInit {
   precioMin = 1;
   provinciaSelected: String[] = [];
   municipioSelected = '';
+  munSel: string[] = [];
   valor: number = 3;
   precioMax = 5;
 
@@ -39,17 +42,21 @@ export class GasolListComponent implements OnInit {
       this.provinciasList = resp;
     });
 
-    // this.myControl.valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => this.filter(value || '')),
-    // );
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
 
   }
 
-    filter(value: String) {
-    let filterValue = value.toLowerCase();
+  private _filter(value: string): MunicipioResponse[] {
+    const filterValue = value.toLowerCase();
 
-    return this.municipioSelected.toLowerCase().includes(filterValue);
+    return this.munList.filter(option => option.Municipio.toLowerCase().includes(filterValue));
+  }
+
+  displayFn(m: MunicipioResponse): string {
+    return m.Municipio;
   }
 
   filtrar(){
@@ -60,21 +67,26 @@ export class GasolListComponent implements OnInit {
     let pasaFiltro = false;
     if(this.carburanteSelected == 'Gasoleo') {
       pasaFiltro = +x['Precio Gasoleo A'].replace(",",".") < this.precioMax &&  this.provinciaSelected.includes(x['IDProvincia'])? true: false;
-      // this.getMunicipios(x['IDProvincia']);
+      this.filtrarMunicipios(this.gasolFilteredList);
     } else if(this.carburanteSelected == 'Gasolina') {
       pasaFiltro = +x['Precio Gasolina 95 E5'].replace(",",".") < this.precioMax && this.provinciaSelected.includes(x['IDProvincia']) ? true: false;
-      // this.getMunicipios(x['IDProvincia']);
+      this.filtrarMunicipios(this.gasolFilteredList);
     } else{
       pasaFiltro = +x['Precio Hidrogeno'].replace(",",".") < this.precioMax &&  this.provinciaSelected.includes(x['IDProvincia'])? true: false;
-      // this.getMunicipios(x['IDProvincia']);
+      this.filtrarMunicipios(this.gasolFilteredList);
     }
     return pasaFiltro;
   }
+
+  filtrarMunicipios(gasol: ListaEESSPrecio[]) {
+    this.gasolFilteredList = gasol.filter(x => x.IDMunicipio == this.municipioSelected);
+  }
   
-  getMunicipios(id: string){
-    this.carburanteService.getMunicipios(id).subscribe((resp) =>{ 
-      this.munList = resp;  
-    })
+  getMunicipios(){
+    this.munList = [];
+    this.provinciaSelected.forEach(x => this.carburanteService.getMunicipios(x).subscribe((resp) => {
+      this.munList = this.munList.concat(resp);
+    }))
   }
 }
 
