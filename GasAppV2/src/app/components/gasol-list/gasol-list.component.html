@@ -1,5 +1,5 @@
 <div>
-    <button mat-button (click)="filtrar()">FILTRAR</button>
+  <button mat-button (click)="filtrar()">FILTRAR</button>
   <mat-slider
     style="margin: 15px"
     class="example-margin"
@@ -16,10 +16,16 @@
   >
   </mat-slider>
 
-  <mat-form-field appearance="fill" style="margin: 5px;">
+  <mat-form-field appearance="fill" style="margin: 5px">
     <mat-label>Provincia</mat-label>
-    <mat-select (closed)="getMunicipios()"[(ngModel)]="provinciaSelected" multiple (selectionChange)="filtrar()">
-      <mat-option *ngFor="let p of provinciasList" [value]="p.IDPovincia">{{p.Provincia}}</mat-option>
+    <mat-select
+      [(ngModel)]="provinciaSelected"
+      multiple
+      (selectionChange)="filtrar()"
+    >
+      <mat-option *ngFor="let p of provinciasList" [value]="p.IDPovincia">{{
+        p.Provincia
+      }}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -35,31 +41,39 @@
   <form class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Municipios</mat-label>
-      <input type="text"
-             [(ngModel)]="municipioSelected"
-             placeholder="Seleccione Municipio"
-             aria-label="Number"
-             matInput
-             [formControl]="myControl"
-             [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <input
+        type="text"
+        [(ngModel)]="municipioSelected"
+        placeholder="Seleccione Municipio"
+        aria-label="Number"
+        matInput
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let m of filteredOptions | async" [value]="m">
-          {{m.Municipio}}
+          {{ m }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
   </form>
 
-  <div style="display: flex; flex-wrap: wrap;">
-    <mat-card class="example-card" *ngFor="let item of gasolFilteredList" style="padding: 20px; margin: 10px;">
-      <mat-card-title>{{ item["Rótulo"] }}</mat-card-title>
-      <mat-card-subtitle>{{ item["Provincia"] }}</mat-card-subtitle>
-      <mat-card-subtitle>{{ item["Municipio"] }}</mat-card-subtitle>
-      <mat-card-content>
-        <p>Precio Gasoleo: {{ item["Precio Gasoleo A"] }}</p>
-        <p>Precio Gasolina: {{ item["Precio Gasolina 95 E5"] }}</p>
-        <p>Precio Hidrógeno: {{ item["Precio Hidrogeno"] }}</p>
-      </mat-card-content>
-    </mat-card>
+  <div style="display: flex; flex-wrap: wrap">
+    <div *ngFor="let item of gasolFilteredList">
+      <mat-card
+        class="example-card"
+        style="padding: 20px; margin: 10px"
+        *ngIf="item['Municipio'].toLowerCase().includes(municipioSelected.toLowerCase())"
+      >
+        <mat-card-title>{{ item["Rótulo"] }}</mat-card-title>
+        <mat-card-subtitle>{{ item["Provincia"] }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ item["Municipio"] }}</mat-card-subtitle>
+        <mat-card-content>
+          <p>Precio Gasoleo: {{ item["Precio Gasoleo A"] }}</p>
+          <p>Precio Gasolina: {{ item["Precio Gasolina 95 E5"] }}</p>
+          <p>Precio Hidrógeno: {{ item["Precio Hidrogeno"] }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>
