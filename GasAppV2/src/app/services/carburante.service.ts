@@ -11,15 +11,9 @@ import { ProvinciaResponse } from '../interfaces/provincia.interface';
 export class CarburanteService {
   constructor(private http: HttpClient) {}
 
-  // getPrecios(): Observable<CarburanteResponse> {
-  //   return this.http.get<CarburanteResponse>(
-  //     `https://raw.githubusercontent.com/Xopin16/GassV1/main/carburante.json`
-  //   );
-  // }
-
   getPrecios(): Observable<CarburanteResponse> {
     return this.http.get<CarburanteResponse>(
-      `https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/`
+      `https://raw.githubusercontent.com/Xopin16/GassV1/main/carburante.json`
     );
   }
 

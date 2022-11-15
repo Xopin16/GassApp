@@ -50,7 +50,11 @@ export class GasolListComponent implements OnInit {
 
   filtrar(){
     this.options = [];
-    this.gasolFilteredList = this.gasolList.filter(x => this.filtro(x));
+    if(this.provinciaSelected.length != 0){
+      this.gasolFilteredList = this.gasolList.filter(x => this.filtro(x));
+    }else {
+      this.gasolFilteredList = this.gasolList;
+    }
   }
 
   filtro(x: ListaEESSPrecio): boolean {

@@ -38,7 +38,7 @@
     </mat-select>
   </mat-form-field>
 
-  <form class="example-form">
+  <form class="example-form" *ngIf="provinciaSelected.length != 0">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Municipios</mat-label>
       <input
