@@ -60,25 +60,23 @@
 
   <div style="display: flex; flex-wrap: wrap">
     <div>
-      <!-- <mat-card
-        class="example-card"
-        style="padding: 20px; margin: 10px"
-        *ngIf="item['Municipio'].toLowerCase().includes(municipioSelected.toLowerCase())"
-      >
-        <mat-card-title>{{ item["Rótulo"] }}</mat-card-title>
-        <mat-card-subtitle>{{ item["Provincia"] }}</mat-card-subtitle>
-        <mat-card-subtitle>{{ item["Municipio"] }}</mat-card-subtitle>
-        <mat-card-content>
-          <p>Precio Gasoleo: {{ item["Precio Gasoleo A"] }}</p>
-          <p>Precio Gasolina: {{ item["Precio Gasolina 95 E5"] }}</p>
-          <p>Precio Hidrógeno: {{ item["Precio Hidrogeno"] }}</p>
-        </mat-card-content>
-      </mat-card> -->
       <google-map height="400px" width="750px" [center]="center" [zoom]="zoom">
         <map-marker
           *ngFor="let gasol of gasolFilteredList"
-          [position]="{lat: getLat(gasol.Latitud), lng: getLng(gasol['Longitud (WGS84)'])}"
+          #marker="mapMarker"
+          [position]="{
+            lat: getLat(gasol.Latitud),
+            lng: getLng(gasol['Longitud (WGS84)'])
+          }"
           [options]="markerOptions"
+          (mapClick)="openInfoWindow(marker)"
+        >
+          <map-info-window>
+            <h1>DETALLES</h1>
+            <p>{{ gasol.Provincia }}</p>
+            <p>{{ gasol["Dirección"] }}</p>
+            <p>{{ gasol["Precio Gasolina 95 E5"] }}</p>
+            <p></p> </map-info-window
         ></map-marker>
       </google-map>
     </div>

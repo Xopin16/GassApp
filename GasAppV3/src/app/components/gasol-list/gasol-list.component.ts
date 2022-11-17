@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ListaEESSPrecio } from 'src/app/interfaces/carburante.interface';
@@ -32,6 +33,7 @@ export class GasolListComponent implements OnInit {
   zoom = 4;
   markerOptions: google.maps.MarkerOptions = { draggable: false };
   markerPositions: google.maps.LatLngLiteral[] = [];
+  @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow = {} as MapInfoWindow;
 
   constructor(private carburanteService: CarburanteService) {}
 
@@ -44,6 +46,10 @@ export class GasolListComponent implements OnInit {
     this.carburanteService.getProvincias().subscribe((resp) => {
       this.provinciasList = resp;
     });
+  }
+
+  openInfoWindow(marker: MapMarker) {
+    this.infoWindow.open(marker);
   }
 
   private _filter(value: string): string[] {
