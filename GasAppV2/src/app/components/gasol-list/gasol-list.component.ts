@@ -50,11 +50,11 @@ export class GasolListComponent implements OnInit {
 
   filtrar(){
     this.options = [];
-    if(this.provinciaSelected.length != 0){
+    // if(this.provinciaSelected.length != 0){
       this.gasolFilteredList = this.gasolList.filter(x => this.filtro(x));
-    }else {
-      this.gasolFilteredList = this.gasolList;
-    }
+    // }else {
+    //   this.gasolFilteredList = this.gasolList;
+    // }
   }
 
   filtro(x: ListaEESSPrecio): boolean {
@@ -70,11 +70,11 @@ export class GasolListComponent implements OnInit {
     }
     let pasaFiltro = false;
     if(this.carburanteSelected == 'Gasoleo') {
-      pasaFiltro = +x['Precio Gasoleo A'].replace(",",".") < this.precioMax &&  this.provinciaSelected.includes(x['IDProvincia']) ? true: false;
+      pasaFiltro = +x['Precio Gasoleo A'].replace(",",".") < this.precioMax && (this.provinciaSelected.includes(x['IDProvincia']) || this.provinciaSelected.length == 0) ? true: false;
     } else if(this.carburanteSelected == 'Gasolina') {
-      pasaFiltro = +x['Precio Gasolina 95 E5'].replace(",",".") < this.precioMax && this.provinciaSelected.includes(x['IDProvincia']) ? true: false;
+      pasaFiltro = +x['Precio Gasolina 95 E5'].replace(",",".") < this.precioMax && (this.provinciaSelected.includes(x['IDProvincia']) || this.provinciaSelected.length == 0) ? true: false;
     } else{
-      pasaFiltro = +x['Precio Hidrogeno'].replace(",",".") < this.precioMax &&  this.provinciaSelected.includes(x['IDProvincia'])? true: false;
+      pasaFiltro = +x['Precio Hidrogeno'].replace(",",".") < this.precioMax &&  (this.provinciaSelected.includes(x['IDProvincia']) || this.provinciaSelected.length == 0)? true: false;
     }
     return pasaFiltro;
   }

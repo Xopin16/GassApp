@@ -38,7 +38,7 @@
     </mat-select>
   </mat-form-field>
 
-  <form class="example-form" *ngIf="provinciaSelected.length != 0">
+  <!-- <form class="example-form" *ngIf="provinciaSelected.length != 0">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Municipios</mat-label>
       <input
@@ -56,11 +56,11 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-  </form>
+  </form> -->
 
-  <div style="display: flex; flex-wrap: wrap">
+  <div>
     <div>
-      <google-map height="400px" width="750px" [center]="center" [zoom]="zoom">
+      <google-map height="650px" width="100%" [center]="center" [zoom]="zoom">
         <map-marker
           *ngFor="let gasol of gasolFilteredList"
           #marker="mapMarker"
@@ -69,15 +69,19 @@
             lng: getLng(gasol['Longitud (WGS84)'])
           }"
           [options]="markerOptions"
-          (mapClick)="openInfoWindow(marker)"
+          (mapClick)="openInfoWindow(marker, gasol)"
         >
-          <map-info-window>
-            <h1>DETALLES</h1>
-            <p>{{ gasol.Provincia }}</p>
-            <p>{{ gasol["Dirección"] }}</p>
-            <p>{{ gasol["Precio Gasolina 95 E5"] }}</p>
-            <p></p> </map-info-window
+
         ></map-marker>
+        <map-info-window>
+          <h1>{{ gasolSelected['Rótulo'] }}</h1>
+          <p>{{ gasolSelected["Provincia"] }}</p>
+          <p>{{ gasolSelected["Municipio"] }}</p>
+          <p>{{ gasolSelected["Dirección"] }}</p>
+          <p>Precio Gasoleo A: {{ gasolSelected["Precio Gasoleo A"] }}</p>
+          <p>Precio Gasolina 95 E5: {{ gasolSelected["Precio Gasolina 95 E5"] }}</p>
+          <p>Precio Hidrogeno: {{ gasolSelected["Precio Hidrogeno"] }}</p>
+         </map-info-window>
       </google-map>
     </div>
   </div>

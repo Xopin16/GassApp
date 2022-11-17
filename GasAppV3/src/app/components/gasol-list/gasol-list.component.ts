@@ -33,7 +33,8 @@ export class GasolListComponent implements OnInit {
   zoom = 4;
   markerOptions: google.maps.MarkerOptions = { draggable: false };
   markerPositions: google.maps.LatLngLiteral[] = [];
-  @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow = {} as MapInfoWindow;
+  @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
+  gasolSelected: ListaEESSPrecio = {} as ListaEESSPrecio;
 
   constructor(private carburanteService: CarburanteService) {}
 
@@ -48,7 +49,12 @@ export class GasolListComponent implements OnInit {
     });
   }
 
-  openInfoWindow(marker: MapMarker) {
+  // openInfoWindow(marker: MapMarker) {
+  //   this.infoWindow.open(marker);
+  // }
+
+  openInfoWindow(marker: MapMarker, station: ListaEESSPrecio) {
+    this.gasolSelected = station;
     this.infoWindow.open(marker);
   }
 
@@ -96,24 +102,12 @@ export class GasolListComponent implements OnInit {
       }
     }
     let pasaFiltro = false;
-    if (this.carburanteSelected == 'Gasoleo') {
-      pasaFiltro =
-        +x['Precio Gasoleo A'].replace(',', '.') < this.precioMax &&
-        this.provinciaSelected.includes(x['IDProvincia'])
-          ? true
-          : false;
-    } else if (this.carburanteSelected == 'Gasolina') {
-      pasaFiltro =
-        +x['Precio Gasolina 95 E5'].replace(',', '.') < this.precioMax &&
-        this.provinciaSelected.includes(x['IDProvincia'])
-          ? true
-          : false;
-    } else {
-      pasaFiltro =
-        +x['Precio Hidrogeno'].replace(',', '.') < this.precioMax &&
-        this.provinciaSelected.includes(x['IDProvincia'])
-          ? true
-          : false;
+    if(this.carburanteSelected == 'Gasoleo') {
+      pasaFiltro = +x['Precio Gasoleo A'].replace(",",".") < this.precioMax && (this.provinciaSelected.includes(x['IDProvincia']) || this.provinciaSelected.length == 0) ? true: false;
+    } else if(this.carburanteSelected == 'Gasolina') {
+      pasaFiltro = +x['Precio Gasolina 95 E5'].replace(",",".") < this.precioMax && (this.provinciaSelected.includes(x['IDProvincia']) || this.provinciaSelected.length == 0) ? true: false;
+    } else{
+      pasaFiltro = +x['Precio Hidrogeno'].replace(",",".") < this.precioMax &&  (this.provinciaSelected.includes(x['IDProvincia']) || this.provinciaSelected.length == 0)? true: false;
     }
     return pasaFiltro;
   }
